@@ -25,7 +25,13 @@ class RefResolver:
 
 
 
-    def resolve(self, json_obj):
+    def resolve(self, json_obj: dict, ignore_cert: bool = False):
+        
+        if ignore_cert:
+            validate_cert = False
+        else:
+            validate_cert = True
+        
         if isinstance(json_obj, dict):
             for key, value in json_obj.items():
                 if key == "$ref":
@@ -38,9 +44,9 @@ class RefResolver:
                         if self.url_fragments.scheme in ['http', 'https']:
                             ref_url = urljoin(self.id, ref_file)
                             if callable(requests.Response.json):
-                                json_dump = requests.get(ref_url).json()
+                                json_dump = requests.get(ref_url, verify=False).json()
                             else:
-                                json_dump = requests.get(ref_url).json
+                                json_dump = requests.get(ref_url, verify=False).json
                             ref_id = None
                             if 'id' in json_dump:
                                 ref_id = json_dump['id']
