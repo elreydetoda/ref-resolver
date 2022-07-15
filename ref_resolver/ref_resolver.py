@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from urlparse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin
 import simplejson as json
 from os.path import isfile
 import jsonpath_rw
